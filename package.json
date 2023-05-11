@@ -1,0 +1,29 @@
+{
+  "name": "stolas_bot_js",
+  "version": "1.0.0",
+  "description": "My first discord bot in js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node deploy-commands.js && node stolas.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eth22-Epitech/stolas_bot_js.git"
+  },
+  "keywords": [
+    "discord"
+  ],
+  "author": "Eth22",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Eth22-Epitech/stolas_bot_js/issues"
+  },
+  "homepage": "https://github.com/Eth22-Epitech/stolas_bot_js#readme",
+  "dependencies": {
+    "discord.js": "^14.10.2",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.39.0"
+  }
+}
