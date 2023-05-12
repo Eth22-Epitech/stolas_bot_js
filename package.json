@@ -4,7 +4,7 @@
   "description": "My first discord bot in js",
   "main": "index.js",
   "scripts": {
-    "start": "node deploy-commands.js && node stolas.js"
+    "start": "node deploy-commands.js && node stolas_bot.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
     "discord.js": "^14.10.2",
     "dotenv": "^16.0.3",
     "fs": "^0.0.1-security",
+    "moment": "^2.29.4",
     "tenor": "^1.0.1",
     "winston": "^3.8.2"
   },

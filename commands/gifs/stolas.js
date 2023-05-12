@@ -1,13 +1,12 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { tenor_key } = require('../../config.json');
-const fs = require('fs');
-const { randomFill } = require('crypto');
 
 module.exports = {
 	cooldown: 5,
 	data: new SlashCommandBuilder()
 		.setName('stolas')
-		.setDescription('Sends a random Stolas gif'),
+		.setDescription('Sends a random Stolas gif')
+        .setDMPermission(false),
     async execute(interaction) {
 
         const url = `https://tenor.googleapis.com/v2/search?q=${'Stolas'}&key=${tenor_key}&limit=${'50'}&media_filter=${'gif'}`;
@@ -30,7 +29,7 @@ module.exports = {
 
             return interaction.reply({embeds: [resultGif]});
         } else {
-            return interaction.reply({content: `It appears i got a problem using \`${command.data.name}\`. Please try again.`, ephemeral: true});
+            return interaction.reply({content: `I seem to have run into a problem using \`${command.data.name}\`. Please try again.`, ephemeral: true});
         }
     },
 };
