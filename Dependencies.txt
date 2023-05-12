@@ -1,3 +1,8 @@
 npm install discord.js
+npm install sequelize
+npm install sqlite3
 npm install fs
 npm install moment --save
+npm install tenor
+npm install winston
+npm install dotenv

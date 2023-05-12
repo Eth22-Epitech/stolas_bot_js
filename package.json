@@ -26,6 +26,8 @@
     "dotenv": "^16.0.3",
     "fs": "^0.0.1-security",
     "moment": "^2.29.4",
+    "sequelize": "^6.31.1",
+    "sqlite3": "^5.1.6",
     "tenor": "^1.0.1",
     "winston": "^3.8.2"
   },
