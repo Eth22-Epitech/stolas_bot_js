@@ -14,7 +14,7 @@ module.exports = {
                 .setDescription('This parameter, when true, only works in nsfw channels!')),
     async execute(interaction) {
 
-        var now = moment().format('MM/DD/YYYY hh:mm:ss');
+        var now = moment().format('MM/DD/YYYY HH:mm:ss');
         const nsfw = interaction.options.getBoolean('nsfw') ?? false;
 
         if (nsfw == false) {

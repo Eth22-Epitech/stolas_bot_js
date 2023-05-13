@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, time } = require('discord.js');
 const { tenor_key } = require('../../config.json');
 var moment = require('moment');
 
@@ -10,7 +10,8 @@ module.exports = {
         .setDMPermission(false)
 
         .addStringOption(option =>
-            option.setName('reaction')
+            option
+                .setName('reaction')
                 .setDescription('This is the reaction')
                 .setRequired(true)
                 .addChoices(
@@ -26,7 +27,7 @@ module.exports = {
 
         const reaction = interaction.options.getString('reaction');
         const target = interaction.options.getUser('target');
-        var now = moment().format('MM/DD/YYYY hh:mm:ss');
+        var now = moment().format('MM/DD/YYYY HH:mm:ss');
 
         if (reaction == "hug") {
 
@@ -41,13 +42,13 @@ module.exports = {
                 console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/react hug' issued => ${randomGif}`);
 
                 const resultGif = new EmbedBuilder()
-                    .setColor('#6b048a')
-                    .setAuthor({name: 'Stolas Bot by Eth22', iconURL: interaction.client.user.displayAvatarURL(), url: 'https://eth22.fr'})
-                    .setTitle('Hugs!')
-                    .setURL(randomGif)
-                    .setDescription(`<@${interaction.user.id}> hugged <@${target.id}>`)
-                    .setImage(randomGif)
-                    .setFooter({text: `${now}`, iconURL: interaction.client.user.displayAvatarURL()})
+                .setColor('#6b048a')
+                .setAuthor({name: 'Stolas Bot by Eth22', iconURL: interaction.client.user.displayAvatarURL(), url: 'https://eth22.fr'})
+                .setTitle('Hugs!')
+                .setURL(randomGif)
+                .setDescription(`<@${interaction.user.id}> hugged <@${target.id}>`)
+                .setImage(randomGif)
+                .setFooter({text: `${now}`, iconURL: interaction.client.user.displayAvatarURL()})
 
                 return interaction.reply({content:`<@${target.id}>`, embeds: [resultGif]});
             } else {

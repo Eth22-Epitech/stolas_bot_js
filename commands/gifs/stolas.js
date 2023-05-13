@@ -12,7 +12,7 @@ module.exports = {
 
         const url = `https://tenor.googleapis.com/v2/search?q=${'Stolas'}&key=${tenor_key}&limit=${'50'}&media_filter=${'gif'}`;
         const res = await fetch(url);
-        var now = moment().format('MM/DD/YYYY hh:mm:ss');
+        var now = moment().format('MM/DD/YYYY HH:mm:ss');
 
         if (res.status == 200) {
 

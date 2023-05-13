@@ -6,3 +6,7 @@ npm install moment --save
 npm install tenor
 npm install winston
 npm install dotenv
+npm install seedrandom
+npm install canvas
+npm install node-fetch
+npm install sharp

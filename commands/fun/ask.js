@@ -15,7 +15,7 @@ module.exports = {
     async execute(interaction) {
 
         const question = interaction.options.getString('question');
-        var now = moment().format('MM/DD/YYYY hh:mm:ss');
+        var now = moment().format('MM/DD/YYYY HH:mm:ss');
 
         if (question) {
 
