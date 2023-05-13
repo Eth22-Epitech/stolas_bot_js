@@ -1,10 +1,15 @@
 const fs = require('node:fs');
 const path = require('node:path');
+// import discord
 const { Client, Collection, Events, GatewayIntentBits, EmbedBuilder } = require('discord.js');
+// import sensible data
 const { token } = require('./config.json');
+// import logger
 const winston = require('winston')
+// import database
+const Sequelize = require('sequelize');
 
-//define log infos
+// define log infos
 const logLevels = {
     error: 0,
     warn: 1,
@@ -37,7 +42,7 @@ const logger = winston.createLogger({
     level: 'debug',
 })
 
-//create discord intents
+// create discord intents
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.cooldowns = new Collection();
@@ -97,7 +102,7 @@ client.on(Events.InteractionCreate, async interaction => {
 		await command.execute(interaction);
 	} catch (error) {
 		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+		await interaction.reply({ content: `Your attempt at command execution has proven to be rather... erroneous. It seems an error has arisen in the process, much to my dismay.`, ephemeral: true });
 	}
 });
 

@@ -11,12 +11,11 @@ module.exports = {
 
         .addBooleanOption(option =>
             option.setName('nsfw')
-                .setDescription('This parameter, when true, only works in nsfw channels!')
-                .setRequired(true)),
+                .setDescription('This parameter, when true, only works in nsfw channels!')),
     async execute(interaction) {
 
         var now = moment().format('MM/DD/YYYY hh:mm:ss');
-        const nsfw = interaction.options.getBoolean('nsfw');
+        const nsfw = interaction.options.getBoolean('nsfw') ?? false;
 
         if (nsfw == false) {
             const url = `https://nekos.moe/api/v1/random/image?nsfw=false`;
@@ -26,19 +25,19 @@ module.exports = {
 
                 const json = await res.json();
                 const randomImage = `https://nekos.moe/image/` + json.images[0].id
-                console.log(`${now} - /neko issued => ${randomImage}`);
+                console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/neko nsfw:false' issued => ${randomImage}`);
 
                 const resultGif = new EmbedBuilder()
-                    .setColor('#0099FF')
-                    .setAuthor({name: 'Stolas Bot by Eth22', iconURL: interaction.user.displayAvatarURL(), url: 'https://eth22.fr'})
+                    .setColor('#6b048a')
+                    .setAuthor({name: 'Stolas Bot by Eth22', iconURL: interaction.client.user.displayAvatarURL(), url: 'https://eth22.fr'})
                     .setTitle('Neko')
                     .setURL(randomImage)
                     .setImage(randomImage)
-                    .setFooter({text: `${now}`, iconURL: interaction.user.displayAvatarURL()})
+                    .setFooter({text: `${now}`, iconURL: interaction.client.user.displayAvatarURL()})
 
                 return interaction.reply({embeds: [resultGif]});
             } else {
-                return interaction.reply({content: `I seem to have run into a problem using \`${command.data.name}\`. Please try again.`, ephemeral: true});
+                return interaction.reply({content: `I seem to have run into a problem using \`${interaction.commandName}\`. Please try again.`, ephemeral: true});
             }
         } else if (nsfw == true) {
             if (interaction.channel.nsfw) {
@@ -49,21 +48,22 @@ module.exports = {
 
                     const json = await res.json();
                     const randomImage = `https://nekos.moe/image/` + json.images[0].id
-                    console.log(`${now} - /neko issued => ${randomImage}`);
+                    console.log(`${now} - /neko nsfw:true issued => ${randomImage}`);
 
                     const resultGif = new EmbedBuilder()
-                        .setColor('#0099FF')
-                        .setAuthor({name: 'Stolas Bot by Eth22', iconURL: interaction.user.displayAvatarURL(), url: 'https://eth22.fr'})
+                        .setColor('#6b048a')
+                        .setAuthor({name: 'Stolas Bot by Eth22', iconURL: interaction.client.user.displayAvatarURL(), url: 'https://eth22.fr'})
                         .setTitle('Neko')
                         .setURL(randomImage)
                         .setImage(randomImage)
-                        .setFooter({text: `${now}`, iconURL: interaction.user.displayAvatarURL()})
+                        .setFooter({text: `${now}`, iconURL: interaction.client.user.displayAvatarURL()})
 
                     return interaction.reply({embeds: [resultGif]});
                 } else {
-                    return interaction.reply({content: `I seem to have run into a problem using \`${command.data.name}\`. Please try again.`, ephemeral: true});
+                    return interaction.reply({content: `I seem to have run into a problem using \`${interaction.commandName}\`. Please try again.`, ephemeral: true});
                 }
             } else {
+                console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/neko nsfw:true' issued => (Not i nsfw channel)`);
                 return interaction.reply({content: `My dear, I'm afraid I must inform you that such commands are not permitted in this particular location. (Not a nsfw channel)`, ephemeral: true});
             }
         }

@@ -19,19 +19,20 @@ module.exports = {
             const json = await res.json();
             const randomIndex = Math.floor(Math.random() * 50);
             const randomGif = json.results[randomIndex].media_formats.gif.url
-            console.log(`${now} - /stolas issued => ${randomGif}`);
+            console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/stolas' issued => ${randomGif}`);
 
             const resultGif = new EmbedBuilder()
-                .setColor('#0099FF')
-                .setAuthor({name: 'Stolas Bot by Eth22', iconURL: interaction.user.displayAvatarURL(), url: 'https://eth22.fr'})
+                .setColor('#6b048a')
+                .setAuthor({name: 'Stolas Bot by Eth22', iconURL: interaction.client.user.displayAvatarURL(), url: 'https://eth22.fr'})
                 .setTitle('Stolas gif')
                 .setURL(randomGif)
+                .setDescription(`Run by <@${interaction.user.id}>`)
                 .setImage(randomGif)
-                .setFooter({text: `${now}`, iconURL: interaction.user.displayAvatarURL()})
+                .setFooter({text: `${now}`, iconURL: interaction.client.user.displayAvatarURL()})
 
             return interaction.reply({embeds: [resultGif]});
         } else {
-            return interaction.reply({content: `I seem to have run into a problem using \`${command.data.name}\`. Please try again.`, ephemeral: true});
+            return interaction.reply({content: `I seem to have run into a problem using \`${interaction.commandName}\`. Please try again.`, ephemeral: true});
         }
     },
 };
