@@ -25,7 +25,7 @@ module.exports = {
 
                 const json = await res.json();
                 const randomImage = `https://nekos.moe/image/` + json.images[0].id
-                console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/neko nsfw:false' issued => ${randomImage}`);
+                console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/neko nsfw:false' in '${interaction.guild.name} #${interaction.channel.name}' issued => ${randomImage}`);
 
                 const resultGif = new EmbedBuilder()
                     .setColor('#6b048a')
@@ -63,7 +63,7 @@ module.exports = {
                     return interaction.reply({content: `I seem to have run into a problem using \`${interaction.commandName}\`. Please try again.`, ephemeral: true});
                 }
             } else {
-                console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/neko nsfw:true' issued => (Not i nsfw channel)`);
+                console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/neko nsfw:true' in '${interaction.guild.name} #${interaction.channel.name}' issued => (Not i nsfw channel)`);
                 return interaction.reply({content: `My dear, I'm afraid I must inform you that such commands are not permitted in this particular location. (Not a nsfw channel)`, ephemeral: true});
             }
         }

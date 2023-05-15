@@ -19,7 +19,7 @@ module.exports = {
             const json = await res.json();
             const randomIndex = Math.floor(Math.random() * 50);
             const randomGif = json.results[randomIndex].media_formats.gif.url
-            console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/stolas' issued => ${randomGif}`);
+            console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/stolas' in '${interaction.guild.name} #${interaction.channel.name}'  issued => ${randomGif}`);
 
             const resultGif = new EmbedBuilder()
                 .setColor('#6b048a')

@@ -1,5 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, CommandInteraction, MessageAttachment } = require('discord.js');
 const { bold, italic, strikethrough, underscore, spoiler, quote, blockQuote } = require('discord.js');
+const { Eth22ID, ShiruID, BlitzoBotID } = require('../../config.json');
 var moment = require('moment');
 
 // dependencies for pseudo seeded random
@@ -30,10 +31,22 @@ module.exports = {
         var now = moment().format('MM/DD/YYYY HH:mm:ss');
 
         // generate the random percentage using the user ids as seed
-        const generator = seedrandom(`${user_1.id + user_2.id}`);
+        const generator = seedrandom(`${user_1.id * user_2.id}`);
         var randomPercentage = Math.trunc((generator() * 100) % 101);
-        if ((user_1.id == 671035455466242089 && user_2.id == 204737976222089216) || (user_1.id == 204737976222089216 && user_2.id == 671035455466242089)) {
+        var replyIndex = 0;
+        if ((user_1.id == Eth22ID && user_2.id == ShiruID) || (user_1.id == ShiruID && user_2.id == Eth22ID)) {
             randomPercentage = 105;
+            replyIndex = 21;
+        }
+        if ((user_1.id == interaction.client.user.id && user_2.id == BlitzoBotID) || (user_1.id == BlitzoBotID && user_2.id == interaction.client.user.id)) {
+            randomPercentage = 102;
+            replyIndex = 22;
+        }
+        if (!replyIndex) {
+            replyIndex = (Math.floor(randomPercentage / 5));
+        }
+        if (randomPercentage <= 100 && replyIndex > 21) {
+            replyIndex = 21;
         }
 
         // here's the list of reply Stolas will give. It goes from 5% to 100% incrementing by steps of 5
@@ -59,14 +72,11 @@ module.exports = {
             "I'm getting a strong feeling that this is meant to be. Congratulations!",                      //90-94%
             "I can confidently say that you two are soulmates. The universe has spoken.",                   //95-99%
             "My my, you two are a match made in heaven. I'm honored to witness such a perfect pairing.",    //100%
-            "As I look upon you two, I can see that the universe has brought you together for a reason. You are each other's missing pieces, destined to complete one another. May your love be as eternal as the stars themselves." //100%+
+            "As I look upon you two, I can see that the universe has brought you together for a reason. You are each other's missing pieces, destined to complete one another. May your love be as eternal as the stars themselves.", //Eth22&Shiru
+            "Oh~ my little Blitzy~ I must say, our compatibility is off the charts. Our shared love for chaos and mischief makes us a match made in the nine circles. I find myself constantly drawn to your devilish charm and mischievous grin. Perhaps we should cause some mayhem together and see where the night takes us?" //Stolas&Blitzo
         ];
-        const replyIndex = (Math.floor(randomPercentage / 5));
-        if (replyIndex > 21) {
-            replyIndex = 21;
-        }
 
-        console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/affinity ${user_1.id} ${user_2.id}' issued => ${randomPercentage} : ${reply[replyIndex]}`)
+        console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/affinity ${user_1.id} ${user_2.id}' in '${interaction.guild.name} #${interaction.channel.name}' issued => ${randomPercentage} : ${reply[replyIndex]}`)
         // create the custom image
         // One day because this fucking sucks i hate this!
 

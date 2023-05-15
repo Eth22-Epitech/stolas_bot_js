@@ -52,7 +52,7 @@ module.exports = {
             )
             .setFooter({text: `${now}`, iconURL: interaction.client.user.displayAvatarURL()})
 
-            console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/ask ${question}' issued => ${answer[randomIndex]}`);
+            console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/ask ${question}' in '${interaction.guild.name} #${interaction.channel.name}' issued => ${answer[randomIndex]}`);
             return interaction.reply({embeds: [answerEmbed]});
         } else {
             return interaction.reply({content: `I seem to have run into a problem using \`${interaction.commandName}\`. Please try again.`, ephemeral: true});
