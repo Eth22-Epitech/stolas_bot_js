@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-const { nekomoe_key } = require('../../config.json');
+const { nekomoe_key, trusted_users } = require('../../config.json');
 var moment = require('moment');
 
 module.exports = {
@@ -13,6 +13,11 @@ module.exports = {
             option.setName('nsfw')
                 .setDescription('This parameter, when true, only works in nsfw channels!')),
     async execute(interaction) {
+
+        if (!trusted_users.includes(interaction.user.id)) {
+            console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/neko nsfw:false' in '${interaction.guild.name} #${interaction.channel.name}' issued => NOT TRUSTED USER`);
+            return interaction.reply({content: `Due to some problems using neko.moe api, this command is only available to trusted users as sfw images tend to be too suggestive.`, ephemeral: true});
+        }
 
         var now = moment().format('MM/DD/YYYY HH:mm:ss');
         const nsfw = interaction.options.getBoolean('nsfw') ?? false;
