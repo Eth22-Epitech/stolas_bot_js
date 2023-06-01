@@ -86,6 +86,7 @@ module.exports = {
             .setColor('#6b048a')
             .setAuthor({name: 'Stolas Bot by Eth22', iconURL: interaction.client.user.displayAvatarURL(), url: 'https://eth22.fr'})
             .setTitle(`Affinity analysis : `)
+            .setThumbnail('https://maniko-dev.eu/assets/discord_bot/hearts/80.png')
             .addFields(
                 { name: `${underscore(bold('Requested by'))}`, value: `<@${interaction.user.id}>`},
                 { name: `${bold(`Affinity : ${randomPercentage}%`)}` , value: `<@${user_1.id}> with <@${user_2.id}>`, inline: true},

@@ -14,12 +14,12 @@ module.exports = {
                 .setDescription('This parameter, when true, only works in nsfw channels!')),
     async execute(interaction) {
 
+        var now = moment().format('MM/DD/YYYY HH:mm:ss');
         if (!trusted_users.includes(interaction.user.id)) {
             console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/neko nsfw:false' in '${interaction.guild.name} #${interaction.channel.name}' issued => NOT TRUSTED USER`);
             return interaction.reply({content: `Due to some problems using neko.moe api, this command is only available to trusted users as sfw images tend to be too suggestive.`, ephemeral: true});
         }
 
-        var now = moment().format('MM/DD/YYYY HH:mm:ss');
         const nsfw = interaction.options.getBoolean('nsfw') ?? false;
 
         if (nsfw == false) {
@@ -53,7 +53,7 @@ module.exports = {
 
                     const json = await res.json();
                     const randomImage = `https://nekos.moe/image/` + json.images[0].id
-                    console.log(`${now} - /neko nsfw:true issued => ${randomImage}`);
+                    console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/neko nsfw:true' in '${interaction.guild.name} #${interaction.channel.name}' issued => ${randomImage}`);
 
                     const resultGif = new EmbedBuilder()
                         .setColor('#6b048a')
