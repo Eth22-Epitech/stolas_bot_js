@@ -15,10 +15,6 @@ module.exports = {
             option.setName('poll_content')
                 .setDescription(`The main question your poll is aiming to answer.`)
                 .setRequired(true))
-        .addBooleanOption(option =>
-            option.setName('visibility')
-                .setDescription(`Should the poll answer be publicly visible or not?`)
-                .setRequired(true))
         .addStringOption(option =>
             option.setName(`choice1`)
                 .setDescription(`The first choice.`)
@@ -34,14 +30,29 @@ module.exports = {
         .addStringOption(option =>
             option.setName(`choice4`)
                 .setDescription(`A fourth choice.")`)
-                .setRequired(false)),
+                .setRequired(false))
+        /*.addStringOption(option =>
+            option.setName(`choice5`)
+                .setDescription(`A fifth choice.")`)
+                .setRequired(false))
+        .addStringOption(option =>
+            option.setName(`choice6`)
+                .setDescription(`A sixth choice.")`)
+                .setRequired(false))
+        .addStringOption(option =>
+            option.setName(`choice7`)
+                .setDescription(`A seventh choice.")`)
+                .setRequired(false))
+        .addStringOption(option =>
+            option.setName(`choice8`)
+                .setDescription(`A eighth choice.")`)
+                .setRequired(false))*/,
     async execute(interaction) {
 
         var now = moment().format('MM/DD/YYYY HH:mm:ss');
 
         if (1 == 1) {
             const pollString = interaction.options.getString('poll_content');
-            const pollVisibility = interaction.options.getBoolean('visibility');
 
             var choices = {};
             for (let x = 0; x <= 10; x++) {
@@ -50,7 +61,7 @@ module.exports = {
                 }
             }
 
-            process.stdout.write(`${now} - ${interaction.user.username} (${interaction.user.id}) '/poll '${pollString}' visibility:${pollVisibility} '`);
+            process.stdout.write(`${now} - ${interaction.user.username} (${interaction.user.id}) '/poll '${pollString}' '`);
             for (let x = 0; x <= 10; x++) {
                 if (interaction.options.getString(`choice${x}`)) {
                     process.stdout.write(`${choices['choice' + x]}, `);
@@ -62,15 +73,13 @@ module.exports = {
             .setColor('#6b048a')
             .setAuthor({name: 'Stolas Bot by Eth22', iconURL: interaction.client.user.displayAvatarURL(), url: 'https://eth22.fr'})
             .setTitle(`${bold(`${interaction.user.username} just created a new poll!`)} :`)
-            .addFields({ name: `${underscore(bold(`${pollString}`))}`, value: `Poll by <@${interaction.user.id}>`})
+            .addFields({name: `${underscore(bold(`${pollString}`))}`, value: `Poll by <@${interaction.user.id}>`})
             .setFooter({text: `${now}`, iconURL: interaction.client.user.displayAvatarURL()})
 
-            if (pollVisibility == true) {
-                pollEmbed.addFields({ name: `\u200B`, value: `\u200B`})
-                for (let x = 0; x <= 10; x++) {
-                    if (interaction.options.getString(`choice${x}`)) {
-                        pollEmbed.addFields({ name: `${choices['choice' + x]} :`, value: "0"})
-                    }
+            pollEmbed.addFields({ name: `\u200B`, value: `\u200B`})
+            for (let x = 0; x <= 10; x++) {
+                if (interaction.options.getString(`choice${x}`)) {
+                    pollEmbed.addFields({name: `${choices['choice' + x]} :`, value: "0"})
                 }
             }
 
