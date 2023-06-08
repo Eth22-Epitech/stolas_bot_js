@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, CommandInteraction, MessageAttachment } = require('discord.js');
 const { bold, italic, strikethrough, underscore, spoiler, quote, blockQuote } = require('discord.js');
-const { Eth22ID, ShiruID, BlitzoBotID } = require('../../config.json');
+const { Eth22ID, ShiruID, TiennID, BlitzoBotID } = require('../../config.json');
 var moment = require('moment');
 
 // dependencies for pseudo seeded random
@@ -34,10 +34,16 @@ module.exports = {
         const generator = seedrandom(`${user_1.id * user_2.id}`);
         var randomPercentage = Math.trunc((generator() * 100) % 101);
         var replyIndex = 0;
+        // Eth22 & Shiruvady
         if ((user_1.id == Eth22ID && user_2.id == ShiruID) || (user_1.id == ShiruID && user_2.id == Eth22ID)) {
             randomPercentage = 105;
             replyIndex = 21;
         }
+        // Eth22 & Tienn
+        if ((user_1.id == Eth22ID && user_2.id == TiennID) || (user_1.id == TiennID && user_2.id == Eth22ID)) {
+            randomPercentage = 100;
+        }
+        // Stolas Bot & Blitzo Bot
         if ((user_1.id == interaction.client.user.id && user_2.id == BlitzoBotID) || (user_1.id == BlitzoBotID && user_2.id == interaction.client.user.id)) {
             randomPercentage = 102;
             replyIndex = 22;

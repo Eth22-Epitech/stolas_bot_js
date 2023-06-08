@@ -43,7 +43,12 @@ const logger = winston.createLogger({
 })
 
 // create discord intents
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMembers
+] });
 
 client.cooldowns = new Collection();
 client.commands = new Collection();

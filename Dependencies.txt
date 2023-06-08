@@ -9,4 +9,5 @@ npm install dotenv
 npm install seedrandom
 npm install canvas
 npm install node-fetch
+npm install fetch
 npm install sharp

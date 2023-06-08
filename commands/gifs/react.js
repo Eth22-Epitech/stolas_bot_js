@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder, time } = require('discord.js');
+const { bold, italic, strikethrough, underscore, spoiler, quote, blockQuote } = require('discord.js');
 const { tenor_key } = require('../../config.json');
 var moment = require('moment');
 
