@@ -3,7 +3,7 @@ const { bold, italic, strikethrough, underscore, spoiler, quote, blockQuote } = 
 const { tenor_key } = require('../../config.json');
 var moment = require('moment');
 
-function quizResult(interaction, answer) {
+function quizResult(interaction, answer, topic) {
     const collectorFilter = (collected) => collected.author.id === interaction.user.id;
     const collector = interaction.channel.createMessageCollector({ filter: collectorFilter, max: 1, time: 30000 });
 
@@ -19,6 +19,10 @@ function quizResult(interaction, answer) {
             .setAuthor({ name: 'Stolas Bot by Eth22', iconURL: interaction.client.user.displayAvatarURL(), url: 'https://eth22.fr' })
             .setDescription(`Your answer: ${userAnswer}\n${isCorrect ? 'Correct!' : 'Incorrect!'}`)
             .setFooter({ text: `${now}`, iconURL: interaction.client.user.displayAvatarURL() });
+
+        if (!isCorrect) {
+            responseEmbed.addFields({ name: `${bold('Correct answer:')}`, value: `${answer.toString()}`},)
+        }
 
         interaction.followUp({ embeds: [responseEmbed] });
     });
@@ -41,7 +45,7 @@ function quizResult(interaction, answer) {
 }
 
 module.exports = {
-	cooldown: 5,
+	cooldown: 30,
 	data: new SlashCommandBuilder()
 		.setName('quiz')
 		.setDescription('Ask a question about the specified topic')
@@ -54,6 +58,7 @@ module.exports = {
                 .setRequired(true)
                 .addChoices(
                     { name: 'Math', value: 'math' },
+                    { name: 'Helluva Boss', value: 'helluva_boss' },
                 )),
     async execute(interaction) {
 
@@ -65,52 +70,16 @@ module.exports = {
         if (topic == 'math') {
 
             const Math_questionList = [
-                ['51 + 12', 63],
-                ['54 + 9', 63],
-                ['72 + 5', 77],
-                ['72 + 8', 80],
-                ['73 + 1', 74],
-                ['81 + 7', 88],
-                ['85 + 6', 91],
-                ['87 + 4', 91],
-                ['63 - 12', 51],
-                ['69 - 15', 54],
-                ['70 - 14', 56],
-                ['72 - 10', 62],
-                ['76 - 8', 68],
-                ['84 - 9', 75],
-                ['88 - 11', 77],
-                ['58 * 7', 406],
-                ['58 * 10', 580],
-                ['58 * 11', 638],
-                ['63 * 4', 252],
-                ['64 * 9', 576],
-                ['65 * 3', 195],
-                ['76 / 8', 9],
-                ['91 / 7', 13],
-                ['92 / 4', 23],
-                ['99 / 9', 11],
-                ['58 / 2', 29],
-                ['42 / 6', 7],
-                ['84 / 12', 7],
-                ['60 / 5', 12],
-                ['72 / 9', 8],
-                ['80 / 10', 8],
-                ['63 / 7', 9],
-                ['81 / 3', 27],
-                ['88 / 4', 22],
-                ['96 / 6', 16],
-                ['100 / 5', 20],
-                ['105 / 7', 15],
-                ['110 / 10', 11],
-                ['144 / 12', 12],
-                ['156 / 13', 12],
-                ['168 / 7', 24],
-                ['52 % 8', 4],
-                ['53 % 11', 9],
-                ['55 % 6', 1],
-                ['56 % 5', 1],
-                ['57 % 12', 3],
+                ['51 + 12', 63], ['54 + 9', 63], ['72 + 5', 77], ['72 + 8', 80], ['73 + 1', 74], ['81 + 7', 88], ['85 + 6', 91], ['87 + 4', 91],
+
+                ['63 - 12', 51], ['69 - 15', 54], ['70 - 14', 56], ['72 - 10', 62], ['76 - 8', 68], ['84 - 9', 75], ['88 - 11', 77],
+
+                ['58 * 7', 406], ['58 * 10', 580], ['58 * 11', 638], ['63 * 4', 252], ['64 * 9', 576], ['65 * 3', 195],
+
+                ['76 / 8', 9], ['91 / 7', 13], ['92 / 4', 23], ['99 / 9', 11], ['58 / 2', 29], ['42 / 6', 7], ['84 / 12', 7], ['60 / 5', 12], ['72 / 9', 8], ['80 / 10', 8],
+                ['63 / 7', 9], ['81 / 3', 27], ['88 / 4', 22], ['96 / 6', 16], ['100 / 5', 20], ['105 / 7', 15], ['110 / 10', 11], ['144 / 12', 12], ['156 / 13', 12], ['168 / 7', 24],
+
+                ['52 % 8', 4], ['53 % 11', 9], ['55 % 6', 1], ['56 % 5', 1], ['57 % 12', 3],
             ];
 
             const Math_randomIndex = Math.floor(Math.random() * Math_questionList.length);
@@ -124,16 +93,45 @@ module.exports = {
                 .setTitle('Quiz!')
                 .addFields(
                     { name: `${underscore(bold('Requested by'))}`, value: `<@${interaction.user.id}>`},
-                    { name: `Theme :`, value: `Math`},
-                    { name: `Question :`, value: `${Math_question}`},
-                    { name: `Timer :`, value: `<t:${Timer}:R>`},
+                    { name: `Theme:`, value: `Math`},
+                    { name: `Question:`, value: `${Math_question}`},
+                    { name: `Timer:`, value: `<t:${Timer}:R>`},
                 )
                 .setFooter({text: `${now}`, iconURL: interaction.client.user.displayAvatarURL()})
 
             await interaction.reply({embeds: [quizEmbed], fetchReply: true});
+            await quizResult(interaction, Math_answer, topic);
 
-            // answer handling
-            await quizResult(interaction, Math_answer);
+        } else if (topic == "helluva_boss") {
+
+            const Helluva_questionList = [
+                ["What's the name of Stolas' daughter?", 'octavia'],
+                ["What's the name of Stolas' father?", 'paimon'],
+                ["What's the name of the amusement park where Blitzo has been tasked to protect Stolas?", 'loolooland'],
+                ["What's the name of the company Blitzo owns?", 'imp'],
+                ["How old was Loona when Blitzo adopted her?", '17'],
+            ];
+
+            const Helluva_randomIndex = Math.floor(Math.random() * Helluva_questionList.length);
+            const Helluva_question = Helluva_questionList[Helluva_randomIndex][0];
+            const Helluva_answer = Helluva_questionList[Helluva_randomIndex][1];
+            console.log(`${now} - ${interaction.user.username} (${interaction.user.id}) '/quiz ${topic}' in '${interaction.guild.name} #${interaction.channel.name}' issued => ${Helluva_question}`);
+
+            const quizEmbed = new EmbedBuilder()
+                .setColor('#6b048a')
+                .setAuthor({name: 'Stolas Bot by Eth22', iconURL: interaction.client.user.displayAvatarURL(), url: 'https://eth22.fr'})
+                .setTitle('Quiz!')
+                .addFields(
+                    { name: `${underscore(bold('Requested by'))}`, value: `<@${interaction.user.id}>`},
+                    { name: `Theme:`, value: `Helluva Boss`},
+                    { name: `Question:`, value: `${Helluva_question}`},
+                    { name: `Timer:`, value: `<t:${Timer}:R>`},
+                )
+                .setFooter({text: `${now}`, iconURL: interaction.client.user.displayAvatarURL()})
+
+            await interaction.reply({embeds: [quizEmbed], fetchReply: true});
+            await quizResult(interaction, Helluva_answer, topic);
+
         } else {
             return interaction.reply({content: `I seem to have run into a problem using \`${interaction.commandName}\`. Please try again.`, ephemeral: true});
         }
